@@ -164,38 +164,43 @@ with right:
                 )
 
             else:
-
                 st.info("Выберите хотя бы один предмет.")
 
         else:
-
             comment = template["template"]
 
+    if comment:
 
-if comment:
-    st.text_area(
-        "Готовый комментарий",
-        value=comment,
-        height=180,
-        key="comment_text"
-    )
-components.html(
-    f"""
-    <button onclick="navigator.clipboard.writeText(`{comment}`)"
-            style="
-                width:100%;
-                padding:10px;
-                border:none;
-                border-radius:8px;
-                background:#ff4b4b;
-                color:white;
-                font-size:16px;
-                cursor:pointer;">
-        📋 Копировать комментарий
-    </button>
-    """,
-    height=55,
-)
+        st.text_area(
+            "Готовый комментарий",
+            value=comment,
+            height=300,
+            key="comment_text"
+        )
+
+        components.html(
+            f"""
+            <button onclick="navigator.clipboard.writeText(`{comment}`)"
+                    style="
+                        width:100%;
+                        padding:10px;
+                        border:none;
+                        border-radius:8px;
+                        background:#ff4b4b;
+                        color:white;
+                        font-size:16px;
+                        cursor:pointer;">
+                📋 Копировать комментарий
+            </button>
+            """,
+            height=55,
+        )
+
+        if st.button("🧹 Очистить", use_container_width=True):
+            for subject in subjects:
+                if subject in st.session_state:
+                    st.session_state[subject] = False
+            st.rerun()
 
 st.divider()
 
