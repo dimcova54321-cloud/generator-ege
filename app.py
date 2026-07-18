@@ -173,25 +173,7 @@ with right:
 
     if comment:
 
-        st.text_area(
-            "Готовый комментарий",
-            value=comment,
-            height=180
-        )
-
-c1, c2 = st.columns(2)
-
-with c1:
-    st.info("💡 Выделите текст выше и нажмите Ctrl+C (⌘+C на Mac).")
-
-with c2:
-    if st.button("🧹 Очистить", use_container_width=True):
-        # Снимаем все галочки
-        for subject in subjects:
-            if subject in st.session_state:
-                st.session_state[subject] = False
-
-        st.rerun()
+        st.code(comment, language=None)
 
     else:
         st.write("")
@@ -200,7 +182,6 @@ st.divider()
 
 with st.sidebar:
     st.header("📌 Шпаргалка")
-
     st.caption("Минимальные баллы ЕГЭ")
 
     st.dataframe(
