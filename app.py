@@ -1,6 +1,5 @@
 import json
 import streamlit as st
-import pyperclip
 from pathlib import Path
 import pandas as pd
 
@@ -180,22 +179,19 @@ with right:
             height=180
         )
 
-        c1, c2 = st.columns(2)
+c1, c2 = st.columns(2)
 
-        with c1:
-            if st.button("📋 Копировать", use_container_width=True):
-                pyperclip.copy(comment)
-                st.success("Комментарий скопирован в буфер обмена.")
+with c1:
+    st.info("💡 Выделите текст выше и нажмите Ctrl+C (⌘+C на Mac).")
 
-        with c2:
-            if st.button("🧹 Очистить", use_container_width=True):
+with c2:
+    if st.button("🧹 Очистить", use_container_width=True):
+        # Снимаем все галочки
+        for subject in subjects:
+            if subject in st.session_state:
+                st.session_state[subject] = False
 
-                # Снимаем все галочки
-                for subject in subjects:
-                    if subject in st.session_state:
-                        st.session_state[subject] = False
-
-                st.rerun()
+        st.rerun()
 
     else:
         st.write("")
