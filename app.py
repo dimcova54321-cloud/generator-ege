@@ -2,6 +2,7 @@ import json
 import streamlit as st
 from pathlib import Path
 import pandas as pd
+import streamlit.components.v1 as components
 
 # -------------------------------------------------------
 # Настройки страницы
@@ -178,20 +179,23 @@ if comment:
         height=180,
         key="comment_text"
     )
-
-    col1, col2 = st.columns(2)
-
-    with col1:
-        st.info("📋 Для копирования выделите текст выше и нажмите Ctrl+C (⌘+C на Mac).")
-
-    with col2:
-        if st.button("🧹 Очистить", use_container_width=True):
-            for subject in subjects:
-                if subject in st.session_state:
-                    st.session_state[subject] = False
-            st.rerun()
-else:
-    st.write("")
+components.html(
+    f"""
+    <button onclick="navigator.clipboard.writeText(`{comment}`)"
+            style="
+                width:100%;
+                padding:10px;
+                border:none;
+                border-radius:8px;
+                background:#ff4b4b;
+                color:white;
+                font-size:16px;
+                cursor:pointer;">
+        📋 Копировать комментарий
+    </button>
+    """,
+    height=55,
+)
 
 st.divider()
 
