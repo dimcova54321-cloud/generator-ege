@@ -98,7 +98,7 @@ st.divider()
 # Левая колонка
 # -------------------------------------------------------
 
-left, right = st.columns([1, 2])
+left, right = st.columns([1, 1.3])
 
 
 with left:
@@ -175,7 +175,7 @@ if comment:
     st.text_area(
         "Готовый комментарий",
         value=comment,
-        height=300,
+        height=180,
         key="comment_text"
     )
 
