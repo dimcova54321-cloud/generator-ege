@@ -98,7 +98,7 @@ st.divider()
 # Левая колонка
 # -------------------------------------------------------
 
-left, right = st.columns([1, 1.3])
+left, right = st.columns([1, 2])
 
 
 with left:
@@ -171,12 +171,27 @@ with right:
             comment = template["template"]
 
 
-    if comment:
+if comment:
+    st.text_area(
+        "Готовый комментарий",
+        value=comment,
+        height=300,
+        key="comment_text"
+    )
 
-        st.code(comment, language=None)
+    col1, col2 = st.columns(2)
 
-    else:
-        st.write("")
+    with col1:
+        st.info("📋 Для копирования выделите текст выше и нажмите Ctrl+C (⌘+C на Mac).")
+
+    with col2:
+        if st.button("🧹 Очистить", use_container_width=True):
+            for subject in subjects:
+                if subject in st.session_state:
+                    st.session_state[subject] = False
+            st.rerun()
+else:
+    st.write("")
 
 st.divider()
 
@@ -190,7 +205,6 @@ with st.sidebar:
         use_container_width=True
     )
 
-st.divider()
 
 st.caption(
     "Генератор комментариев • Версия 1.0"
