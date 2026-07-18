@@ -178,23 +178,65 @@ with right:
             key="comment_text"
         )
 
-        components.html(
-            f"""
-            <button onclick="navigator.clipboard.writeText(`{comment}`)"
-                    style="
-                        width:100%;
-                        padding:10px;
-                        border:none;
-                        border-radius:8px;
-                        background:#ff4b4b;
-                        color:white;
-                        font-size:16px;
-                        cursor:pointer;">
-                📋 Копировать комментарий
-            </button>
-            """,
-            height=55,
-        )
+        st.components.v1.html(
+    f"""
+    <textarea id="comment" style="display:none;">{comment}</textarea>
+
+    <button
+        id="copyBtn"
+        onclick="copyText()"
+        style="
+            width:100%;
+            background:#ff4b4b;
+            color:white;
+            border:none;
+            border-radius:8px;
+            padding:12px;
+            font-size:18px;
+            cursor:pointer;
+            transition:all .15s ease;
+        ">
+        📋 Копировать комментарий
+    </button>
+
+    <p id="msg"
+       style="
+            display:none;
+            color:#4CAF50;
+            font-weight:bold;
+            margin-top:10px;
+            text-align:center;">
+        ✅ Комментарий успешно скопирован
+    </p>
+
+    <script>
+    async function copyText(){{
+
+        const btn = document.getElementById("copyBtn");
+
+        btn.style.transform = "scale(0.97)";
+        btn.style.opacity = "0.8";
+
+        await navigator.clipboard.writeText(
+            document.getElementById("comment").value
+        );
+
+        setTimeout(()=>{{
+            btn.style.transform = "scale(1)";
+            btn.style.opacity = "1";
+        }},150);
+
+        const msg = document.getElementById("msg");
+        msg.style.display="block";
+
+        setTimeout(()=>{{
+            msg.style.display="none";
+        }},2000);
+    }}
+    </script>
+    """,
+    height=90,
+)
 
 st.divider()
 
