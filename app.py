@@ -174,7 +174,7 @@ with right:
         st.text_area(
             "Готовый комментарий",
             value=comment,
-            height=300,
+            height=150,
             key="comment_text"
         )
 
