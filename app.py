@@ -196,12 +196,6 @@ with right:
             height=55,
         )
 
-        if st.button("🧹 Очистить", use_container_width=True):
-            for subject in subjects:
-                if subject in st.session_state:
-                    st.session_state[subject] = False
-            st.rerun()
-
 st.divider()
 
 with st.sidebar:
