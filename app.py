@@ -2,7 +2,7 @@ import json
 import streamlit as st
 import pyperclip
 from pathlib import Path
-
+import pandas as pd
 
 # -------------------------------------------------------
 # Настройки страницы
@@ -49,6 +49,17 @@ templates = load_templates()
 with open("scores.json", "r", encoding="utf-8") as f:
     scores = json.load(f)
 
+table = []
+
+for subject, values in scores.items():
+    table.append({
+        "Предмет": subject,
+        "Бюджет": values["Бюджет"],
+        "Договор": values["Договор"]
+    })
+
+df_scores = pd.DataFrame(table)
+
 # -------------------------------------------------------
 # Служебные функции
 # -------------------------------------------------------
@@ -80,10 +91,6 @@ def get_template(name):
 # -------------------------------------------------------
 
 st.title("📄 Генератор комментариев")
-
-st.caption(
-    "Приемная комиссия"
-)
 
 st.divider()
 
@@ -195,21 +202,19 @@ with right:
 
 st.divider()
 
-st.caption(
-    "Генератор комментариев • Версия 1.0"
-)
+with st.sidebar:
+    st.header("📌 Шпаргалка")
+
+    st.caption("Минимальные баллы ЕГЭ")
+
+    st.dataframe(
+        df_scores,
+        hide_index=True,
+        use_container_width=True
+    )
 
 st.divider()
 
-st.subheader("📌 Минимальные баллы ЕГЭ")
-
-table = []
-
-for subject, values in scores.items():
-    table.append({
-        "Предмет": subject,
-        "Бюджет": values["Бюджет"],
-        "Договор": values["Договор"]
-    })
-
-st.table(table)
+st.caption(
+    "Генератор комментариев • Версия 1.0"
+)
