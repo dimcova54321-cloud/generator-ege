@@ -46,6 +46,8 @@ subjects = load_subjects()
 
 templates = load_templates()
 
+with open("scores.json", "r", encoding="utf-8") as f:
+    scores = json.load(f)
 
 # -------------------------------------------------------
 # Служебные функции
@@ -196,3 +198,18 @@ st.divider()
 st.caption(
     "Генератор комментариев • Версия 1.0"
 )
+
+st.divider()
+
+st.subheader("📌 Минимальные баллы ЕГЭ")
+
+table = []
+
+for subject, values in scores.items():
+    table.append({
+        "Предмет": subject,
+        "Бюджет": values["Бюджет"],
+        "Договор": values["Договор"]
+    })
+
+st.table(table)
