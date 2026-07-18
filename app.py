@@ -171,11 +171,21 @@ with right:
 
     if comment:
 
+        # Динамический key: любое изменение шаблона или набора
+        # предметов создаёт "новый" виджет, поэтому value=comment
+        # всегда применяется, а не игнорируется старым состоянием.
+        widget_key = (
+            "comment_text_"
+            + selected_template
+            + "_"
+            + "_".join(selected_subjects)
+        )
+
         st.text_area(
             "Готовый комментарий",
             value=comment,
             height=150,
-            key="comment_text"
+            key=widget_key
         )
 
         st.components.v1.html(
