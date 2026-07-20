@@ -86,6 +86,14 @@ def get_template(name):
     return None
 
 
+def clear_all_subjects():
+
+    # Сбрасываем состояние всех чекбоксов ДО их перерисовки,
+    # иначе Streamlit не даст изменить значения виджетов.
+    for subject in subjects:
+        st.session_state[subject] = False
+
+
 # -------------------------------------------------------
 # Заголовок
 # -------------------------------------------------------
@@ -114,7 +122,17 @@ with left:
         template_names
     )
 
-    st.markdown("### Предметы")
+    header_col, button_col = st.columns([2, 1])
+
+    with header_col:
+        st.markdown("### Предметы")
+
+    with button_col:
+        st.button(
+            "🧹 Очистить",
+            on_click=clear_all_subjects,
+            use_container_width=True
+        )
 
     # -----------------------------------------
     # Чекбоксы предметов
